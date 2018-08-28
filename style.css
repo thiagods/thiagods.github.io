@@ -1,0 +1,29 @@
+.cidades{
+    fill:gray;
+    stroke: white;
+    stroke-linejoin: round;
+}    
+
+div.tooltip {  
+    box-sizing: border-box; 
+    display: inline;
+    position: absolute;           
+    text-align: center;           
+    height: 32px;                 
+    padding: 2px;             
+    font: 12px sans-serif;        
+    background: white;   
+    border: 0px;      
+    border-radius: 8px;   
+    position: absolute;
+    pointer-events: none;
+}
+
+.chart rect{ 
+    fill: steelblue;
+    float: left;
+} 
+
+#mapa{
+  float: left;
+}
