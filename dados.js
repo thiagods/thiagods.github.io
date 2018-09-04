@@ -61,3 +61,21 @@ function get_ocorrencias_meses(cidade, ano) {
 		return null;
 	}
 }
+
+function get_ocorrencias_anos(cidade){
+	anos = [2007, 2008, 2009, 2010, 2011,2012, 2013, 2014, 2015, 2016, 2017];
+	ocorrencias = [0];
+
+	for(var ano in anos){
+		var total = get_ocorrencias_totais(anos[ano])
+		
+		try {
+	        ocorrencias.push(total[cidade].total);
+	    }
+	    catch(err) {
+	       ocorrencias.push(0);
+	    }
+	}
+
+	return ocorrencias
+}

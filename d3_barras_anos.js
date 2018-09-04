@@ -1,16 +1,17 @@
 
 
-function desenha_barras(data, cidade, ano){
+function desenha_barras_ano(data, cidade){
 
-	var margin = 27;
+	var margin = 30;
 	var width = 350;
 	var height = 150;
 
-	var x_ini = 20;
+	var x_ini = 30;
 	var max = d3.max(data);
+	var ano_inicial = 2007
 
 	var x = d3.scaleBand()
-				.domain([1,2,3,4,5,6,7,8,9,10,11,12])
+				.domain([2007, 2008, 2009, 2010, 2011,2012, 2013, 2014, 2015, 2016, 2017])
 				.range([0,width]);
 			
 	var y = d3.scaleLinear()
@@ -18,15 +19,15 @@ function desenha_barras(data, cidade, ano){
 				.range([height,0]);
 
 
-	var div_bar = d3.select("body")
+	var div_bar_ano = d3.select("body")
 					.append("div")   
 					.attr("class", "tooltip")               
 					.style("opacity", 0);
 
-	var chart = d3.select(".chart");
-	var titulo = cidade + " - " + ano.toString();
+	var chart_ano = d3.select(".chart_ano");
+	var titulo = cidade;
 
-	chart.attr("width",width + 2*margin)
+	chart_ano.attr("width",width + 2*margin)
 			.attr("height",height + 4*margin)
 			.append("g")
 			.attr("transform","translate(" + (margin+x_ini) + "," + margin + ")")
@@ -35,12 +36,12 @@ function desenha_barras(data, cidade, ano){
 			.enter().append("rect")
 			.attr("width",margin-1)
 			.attr("height",function(d) { return height - y(d); })
-			.attr("x",function(d,i) { return x(i); })
+			.attr("x",function(d,i) { return x(i+ano_inicial-1); })
 			.attr("y",function(d) { return y(d); })
-			.on('mouseover', mouseover_bar)
-			.on('mouseout', mouseout_bar);
+			.on('mouseover', mouseover_bar_ano)
+			.on('mouseout', mouseout_bar_ano);
 
-	chart.append("text")
+	chart_ano.append("text")
         .attr("x", (width / 2)+margin+x_ini)             
         .attr("y", margin)
         .attr("text-anchor", "middle")  
@@ -48,20 +49,20 @@ function desenha_barras(data, cidade, ano){
         // .style("text-decoration", "underline")  
         .text(titulo);
 
-	chart.append("g")
+	chart_ano.append("g")
 			.attr("transform", "translate(" + (margin+x_ini) + "," + margin + ")")
 			.call(d3.axisLeft(y));
 
-	chart.append("text")             
+	chart_ano.append("text")             
 	      .attr("transform", "translate(" + (width-100) + " ," + (height + margin + 35) + ")")
 	      .style("text-anchor", "middle")
-	      .text("Meses");
+	      .text("Anos");
 
-	chart.append("g")
+	chart_ano.append("g")
 			.attr("transform", "translate(" + (margin+x_ini) + "," + (height+margin) + ")")
 			.call(d3.axisBottom(x));
 
-	chart.append("text")
+	chart_ano.append("text")
 	      .attr("transform", "rotate(-90)")
 	      .attr("y", 0 - margin.left-15)
 	      .attr("x",0 - (height / 2)-margin)
@@ -69,14 +70,14 @@ function desenha_barras(data, cidade, ano){
 	      .style("text-anchor", "middle")
 	      .text("Ocorrências");  
 
-	function mouseover_bar(d){
+	function mouseover_bar_ano(d){
 		var dados_totais = get_ocorrencias_totais();
 		
-		div_bar.transition()       
-				.duration(20)      
+		div_bar_ano.transition()       
+				.duration(200)      
 				.style("opacity", .9);
 
-		div_bar.html(d)
+		div_bar_ano.html(d)
 				.style("left", (d3.event.pageX) + "px")     
 				.style("top", (d3.event.pageY - 28) + "px")      
 				.style("height", 20 + "px")      
@@ -84,20 +85,20 @@ function desenha_barras(data, cidade, ano){
 				.style("color", "white")      
 	}
 
-	function mouseout_bar(d){
-		 div_bar.transition()       
-				.duration(20)
+	function mouseout_bar_ano(d){
+		 div_bar_ano.transition()       
+				.duration(200)
 				.style("opacity", .0);
 	}
 }
 
-function atualiza_barras(cidade, ano){
-	$(".chart").empty();
+function atualiza_barras_ano(cidade){
+	$(".chart_ano").empty();
 
-	if(cidade != null && ano != null){
-			var data = get_ocorrencias_meses(cidade, ano);
+	if(cidade != null){
+		var data = get_ocorrencias_anos(cidade);
 		if(data != null){
-			desenha_barras(data, cidade, ano);
+			desenha_barras_ano(data, cidade);
 		} else {
 			alert(cidade + " não possui dados sobre ocorrências");
 		}

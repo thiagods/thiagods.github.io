@@ -24,6 +24,11 @@ div.tooltip {
     float: left;
 } 
 
+.chart_ano rect{ 
+    fill: steelblue;
+    float: left;
+} 
+
 #mapa{
   float: left;
 }

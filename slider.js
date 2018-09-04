@@ -17,6 +17,7 @@ var slider3 = d3.sliderHorizontal()
                 .on('onchange', function() {
                     atualiza_mapa(slider3.value());
                     atualiza_dados(cidade, slider3.value());
+                    atualiza_barras_ano(cidade);
                 });
 
 var g = d3.select("#slider3").append("svg")

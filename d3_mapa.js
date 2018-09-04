@@ -103,6 +103,7 @@ function desenha_mapa(ano){
 
 	function click(d){
 	    atualiza_barras(d.properties.name, ano);
+	    atualiza_barras_ano(d.properties.name);
 	    cidade = d.properties.name;
 	}
 
